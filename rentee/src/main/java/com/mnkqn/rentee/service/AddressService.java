@@ -1,7 +1,8 @@
 package com.mnkqn.rentee.service;
 
-import com.mnkqn.rentee.domain.entity.Address;
+import com.mnkqn.rentee.domain.dto.AddressDto;
 
 public interface AddressService {
-    Address getById(Long id);
+
+    AddressDto getById(Long id);
 }
