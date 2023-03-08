@@ -1,12 +1,9 @@
 package com.mnkqn.userservice.domain.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 public class UserDto implements Serializable {
 
     private String firstName;

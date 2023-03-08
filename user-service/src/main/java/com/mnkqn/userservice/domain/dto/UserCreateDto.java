@@ -1,7 +1,10 @@
 package com.mnkqn.userservice.domain.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.*;
 
+@Data
 public class UserCreateDto {
 
     @NotNull(message="First name cannot be null")
@@ -19,4 +22,5 @@ public class UserCreateDto {
     @NotNull(message="Email cannot be null")
     @Email
     private String email;
+
 }
