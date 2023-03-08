@@ -1,6 +1,7 @@
 package com.mnkqn.userservice.security;
 
 import com.mnkqn.userservice.service.UserService;
+import com.mnkqn.userservice.util.requestsMappings.RequestsMappings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +21,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class WebSecurity {
 
-    private Environment environment;
-    private UserService  userService;
-    private PasswordEncoder passwordEncoder;
+    private final Environment environment;
+    private final UserService  userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -35,13 +36,18 @@ public class WebSecurity {
 
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
+        AuthenticationFilter authenticationFilter =
+                new AuthenticationFilter(userService, environment, authenticationManager);
+        authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
+
+
         http.csrf().disable();
 
         http.authorizeHttpRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.POST, RequestsMappings.SERVICE_NAME).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 .and()
-                .addFilter(new AuthenticationFilter(userService, environment, authenticationManager))
+                .addFilter(authenticationFilter)
                 .authenticationManager(authenticationManager)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
