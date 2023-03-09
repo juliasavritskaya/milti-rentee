@@ -9,4 +9,6 @@ public interface AccommodationService {
 
     List<AccommodationResponse> getAllByOwnerId(String id);
 
+    AccommodationResponse getById(Long id);
+
 }

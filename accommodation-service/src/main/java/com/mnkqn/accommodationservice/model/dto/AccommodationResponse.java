@@ -17,5 +17,5 @@ public class AccommodationResponse {
 
     private Short bedrooms;
 
-    private String userId;
+    private String ownerId;
 }

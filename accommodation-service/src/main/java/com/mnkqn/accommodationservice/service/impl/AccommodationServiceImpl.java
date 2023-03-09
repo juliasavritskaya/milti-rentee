@@ -28,6 +28,19 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public List<AccommodationResponse> getAllByOwnerId(String id) {
-        return null;
+        List<Accommodation> accommodations = accommodationRepository.findAllByOwnerId(id);
+
+        return accommodationMapper.fromAccommodationToAccommodationResponseList(accommodations);
     }
+
+
+    @Override
+    public AccommodationResponse getById(Long id) {
+        Accommodation accommodation = accommodationRepository.getById(id);
+
+        //TODO null check
+
+        return accommodationMapper.fromAccommodationToAccommodationResponse(accommodation);
+    }
+
 }
