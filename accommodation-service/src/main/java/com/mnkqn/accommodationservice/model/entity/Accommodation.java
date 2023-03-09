@@ -29,7 +29,7 @@ public class Accommodation {
     @Column(name = "bedrooms")
     private Short bedrooms;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "owner_id")
+    private String ownerId;
 
 }

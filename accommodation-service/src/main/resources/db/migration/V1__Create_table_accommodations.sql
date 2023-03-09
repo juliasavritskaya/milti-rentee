@@ -6,5 +6,5 @@ CREATE TABLE "accommodations"
     "price"       int           NOT NULL,
     "rooms"       int2          NOT NULL,
     "bedrooms"    int2          NOT NULL,
-    "user_id"     varchar       NOT NULL
+    "owner_id"    varchar       NOT NULL
 );

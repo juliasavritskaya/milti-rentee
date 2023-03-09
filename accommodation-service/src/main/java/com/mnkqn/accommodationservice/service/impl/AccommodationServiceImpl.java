@@ -22,13 +22,12 @@ public class AccommodationServiceImpl implements AccommodationService {
     @Override
     public List<AccommodationResponse> getAll() {
         List<Accommodation> accommodations = accommodationRepository.findAll();
-        List<AccommodationResponse> mappedAccommodations = accommodationMapper.fromAccommodationToAccommodationResponseList(accommodations);
 
-        return mappedAccommodations;
+        return accommodationMapper.fromAccommodationToAccommodationResponseList(accommodations);
     }
 
     @Override
-    public List<AccommodationResponse> getAllByUserId(String id) {
+    public List<AccommodationResponse> getAllByOwnerId(String id) {
         return null;
     }
 }

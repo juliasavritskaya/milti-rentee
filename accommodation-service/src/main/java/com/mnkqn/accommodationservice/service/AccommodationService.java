@@ -7,6 +7,6 @@ import java.util.List;
 public interface AccommodationService {
     List<AccommodationResponse> getAll();
 
-    List<AccommodationResponse> getAllByUserId(String id);
+    List<AccommodationResponse> getAllByOwnerId(String id);
 
 }
