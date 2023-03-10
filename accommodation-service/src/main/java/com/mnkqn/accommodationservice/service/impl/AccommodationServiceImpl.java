@@ -2,9 +2,12 @@ package com.mnkqn.accommodationservice.service.impl;
 
 import com.mnkqn.accommodationservice.model.dto.AccommodationRequest;
 import com.mnkqn.accommodationservice.model.dto.AccommodationResponse;
+import com.mnkqn.accommodationservice.model.dto.EmailNotificationDto;
+import com.mnkqn.accommodationservice.model.dto.ReservationResponse;
 import com.mnkqn.accommodationservice.model.entity.Accommodation;
 import com.mnkqn.accommodationservice.repository.jpa.AccommodationRepository;
 import com.mnkqn.accommodationservice.service.AccommodationService;
+import com.mnkqn.accommodationservice.service.EmailNotificationService;
 import com.mnkqn.accommodationservice.util.objectMapper.AccommodationMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
     private final AccommodationMapper accommodationMapper;
+    private final EmailNotificationService emailNotificationService;
 
     @Override
     public List<AccommodationResponse> getAll() {
@@ -67,11 +71,20 @@ public class AccommodationServiceImpl implements AccommodationService {
         return accommodationMapper.fromAccommodationToAccommodationResponse(editedAccommodation);
     }
 
+    @Override
+    public ReservationResponse applyForReservation(Long id, String user_uuid) {
+        //UserDetails user =
+        // String email = user.getEmail();
+        String email = "juststeamnova@gmail.com";
+        String subject = "Reservation";
+        String content = "Someone applied for a reservation";
+        EmailNotificationDto emailNotificationDto = new EmailNotificationDto(email, subject, content);
+        emailNotificationService.sendEmail(emailNotificationDto);
+        return new ReservationResponse("Sent");
+    }
+
     private boolean verifyBelongsToUser(Long accommodationId, String user_uuid) {
         Accommodation accommodation = accommodationRepository.getById(accommodationId);
-        if (accommodation.getOwnerId().equals(user_uuid)) {
-            return true;
-        }
-        return false;
+        return accommodation.getOwnerId().equals(user_uuid);
     }
 }

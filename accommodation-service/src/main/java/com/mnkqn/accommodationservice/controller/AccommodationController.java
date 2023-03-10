@@ -2,16 +2,15 @@ package com.mnkqn.accommodationservice.controller;
 
 import com.mnkqn.accommodationservice.model.dto.AccommodationRequest;
 import com.mnkqn.accommodationservice.model.dto.AccommodationResponse;
+import com.mnkqn.accommodationservice.model.dto.ReservationResponse;
 import com.mnkqn.accommodationservice.service.AccommodationService;
 import com.mnkqn.accommodationservice.util.requestsMappings.RequestsMappings;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.Path;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -60,5 +59,20 @@ public class AccommodationController {
         AccommodationResponse editedAccommodation = accommodationService.edit(id, user_uuid, accommodation);
         return ResponseEntity.ok(editedAccommodation);
     }
+
+    @PostMapping(value = "/{id}/reservation")
+    public ResponseEntity<ReservationResponse> applyForReservation(@PathVariable Long id, @RequestHeader(value = "user_uuid") String user_uuid) {
+
+        ReservationResponse response = accommodationService.applyForReservation(id, user_uuid);
+        return ResponseEntity.ok(response);
+    }
+
+/*    @PostMapping(value = "")
+    public ResponseEntity<AccommodationResponse> saveAccommodation(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader,
+                                                  @RequestBody @Valid AccommodationRequest accommodation) {
+
+        AccommodationResponse createdAccommodation = accommodationService.save(authorizationHeader, accommodation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAccommodation);
+    }*/
 
 }

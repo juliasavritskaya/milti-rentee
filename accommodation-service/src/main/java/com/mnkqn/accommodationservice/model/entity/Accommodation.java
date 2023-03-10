@@ -32,4 +32,7 @@ public class Accommodation {
     @Column(name = "owner_id")
     private String ownerId;
 
+    //TODO
+    /*private Status status*/
+
 }
