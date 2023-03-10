@@ -1,5 +1,6 @@
 package com.mnkqn.accommodationservice.service.impl;
 
+import com.mnkqn.accommodationservice.model.dto.AccommodationRequest;
 import com.mnkqn.accommodationservice.model.dto.AccommodationResponse;
 import com.mnkqn.accommodationservice.model.entity.Accommodation;
 import com.mnkqn.accommodationservice.repository.jpa.AccommodationRepository;
@@ -43,4 +44,11 @@ public class AccommodationServiceImpl implements AccommodationService {
         return accommodationMapper.fromAccommodationToAccommodationResponse(accommodation);
     }
 
+    @Override
+    public AccommodationResponse save(String user_uuid, AccommodationRequest accommodation) {
+        Accommodation accommodationToCreate = accommodationMapper.fromAccommodationRequestToAccommodation(accommodation);
+        accommodationToCreate.setOwnerId(user_uuid);
+        Accommodation createdAccommodation = accommodationRepository.save(accommodationToCreate);
+        return accommodationMapper.fromAccommodationToAccommodationResponse(createdAccommodation);
+    }
 }

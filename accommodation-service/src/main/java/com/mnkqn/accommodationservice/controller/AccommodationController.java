@@ -1,15 +1,16 @@
 package com.mnkqn.accommodationservice.controller;
 
+import com.mnkqn.accommodationservice.model.dto.AccommodationRequest;
 import com.mnkqn.accommodationservice.model.dto.AccommodationResponse;
 import com.mnkqn.accommodationservice.service.AccommodationService;
 import com.mnkqn.accommodationservice.util.requestsMappings.RequestsMappings;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -42,5 +43,21 @@ public class AccommodationController {
         List<AccommodationResponse> accommodations= accommodationService.getAllByOwnerId(ownerId);
         return ResponseEntity.ok().body(accommodations);
     }
+
+    @PostMapping(value = "")
+    public ResponseEntity<AccommodationResponse> createAccommodation(@RequestHeader(value = "user_uuid") String user_uuid,
+                                                                   @RequestBody @Valid AccommodationRequest accommodation) {
+
+        AccommodationResponse createdAccommodation = accommodationService.save(user_uuid, accommodation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAccommodation);
+    }
+
+/*    @PostMapping(value = "")
+    public ResponseEntity<AccommodationResponse> saveAccommodation(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader,
+                                                  @RequestBody @Valid AccommodationRequest accommodation) {
+
+        AccommodationResponse createdAccommodation = accommodationService.save(authorizationHeader, accommodation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAccommodation);
+    }*/
 
 }
