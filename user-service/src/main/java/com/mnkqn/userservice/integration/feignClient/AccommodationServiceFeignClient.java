@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface AccommodationServiceFeignClient {
 
     @GetMapping
-    void getAccommodations();
+    void getUsersAccommodations();
 }
