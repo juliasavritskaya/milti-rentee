@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,12 +53,12 @@ public class AccommodationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAccommodation);
     }
 
-/*    @PostMapping(value = "")
-    public ResponseEntity<AccommodationResponse> saveAccommodation(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authorizationHeader,
-                                                  @RequestBody @Valid AccommodationRequest accommodation) {
+    @PutMapping(value = "{id}")
+    public ResponseEntity<AccommodationResponse> editAccommodation(@PathVariable Long id, @RequestHeader(value = "user_uuid") String user_uuid,
+                                                                     @RequestBody @Valid AccommodationRequest accommodation) {
 
-        AccommodationResponse createdAccommodation = accommodationService.save(authorizationHeader, accommodation);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAccommodation);
-    }*/
+        AccommodationResponse editedAccommodation = accommodationService.edit(id, user_uuid, accommodation);
+        return ResponseEntity.ok(editedAccommodation);
+    }
 
 }

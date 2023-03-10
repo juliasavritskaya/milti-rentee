@@ -1,8 +1,10 @@
 package com.mnkqn.accommodationservice.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class AccommodationResponse {
 
     private Long id;

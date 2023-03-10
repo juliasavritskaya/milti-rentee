@@ -51,4 +51,27 @@ public class AccommodationServiceImpl implements AccommodationService {
         Accommodation createdAccommodation = accommodationRepository.save(accommodationToCreate);
         return accommodationMapper.fromAccommodationToAccommodationResponse(createdAccommodation);
     }
+
+    @Override
+    public AccommodationResponse edit(Long id, String user_uuid, AccommodationRequest accommodation) {
+        if (!verifyBelongsToUser(id, user_uuid)) {
+            //TODO
+            return new AccommodationResponse(0L, "no", "such acc", 0, (short) 0, (short) 0, "string");
+        }
+        Accommodation accommodationToEdit = accommodationMapper.fromAccommodationRequestToAccommodation(accommodation);
+        accommodationToEdit.setId(id);
+        accommodationToEdit.setOwnerId(user_uuid);
+
+        Accommodation editedAccommodation = accommodationRepository.save(accommodationToEdit);
+
+        return accommodationMapper.fromAccommodationToAccommodationResponse(editedAccommodation);
+    }
+
+    private boolean verifyBelongsToUser(Long accommodationId, String user_uuid) {
+        Accommodation accommodation = accommodationRepository.getById(accommodationId);
+        if (accommodation.getOwnerId().equals(user_uuid)) {
+            return true;
+        }
+        return false;
+    }
 }

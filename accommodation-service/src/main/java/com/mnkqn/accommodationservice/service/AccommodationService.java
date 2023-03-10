@@ -14,4 +14,6 @@ public interface AccommodationService {
 
     AccommodationResponse save(String user_uuid, AccommodationRequest accommodation);
 
+    AccommodationResponse edit(Long id, String user_uuid, AccommodationRequest accommodation);
+
 }
